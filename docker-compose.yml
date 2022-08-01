@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  database:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=library_database
+      - POSTGRES_USER=santi
+      - POSTGRES_PASSWORD=1603
+    ports:
+      - '54320:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
+    external: true
