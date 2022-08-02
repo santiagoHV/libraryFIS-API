@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
+
 import { PublicationsModule } from './publications/publications.module';
+import { AuthorsModule } from './authors/authors.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -9,7 +12,7 @@ import { PublicationsModule } from './publications/publications.module';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'santi',
+      user: 'santi',
       password: '1603',
       database: 'library_database',
       entities: ['dist/**/*.entity{.ts,.js}'],
@@ -17,7 +20,9 @@ import { PublicationsModule } from './publications/publications.module';
       retryDelay: 3000,
       retryAttempts: 10
     }),
-    PublicationsModule
+    PublicationsModule,
+    AuthorsModule,
+    UsersModule
   ],
   controllers: [],
   providers: [],
