@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { 
+    Entity, 
+    PrimaryGeneratedColumn, 
+    Column,
+    CreateDateColumn, 
+    UpdateDateColumn,
+    OneToMany,
+} from "typeorm";
+
+import { Publication } from "src/publications/entities/publication.entity";
 
 @Entity()
 export class Author{
@@ -19,4 +28,19 @@ export class Author{
 
     @Column({default: null})
     address: string
+
+    @OneToMany(() => Publication, publication => publication.author)
+    publications: Publication[]
+
+    @CreateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP'
+    })
+    createdAt: Date
+
+    @UpdateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP'
+    })
+    updatedAt: Date
 }

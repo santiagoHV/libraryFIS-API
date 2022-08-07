@@ -1,4 +1,16 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm'
+import {
+    Entity,
+    Column, 
+    PrimaryGeneratedColumn, 
+    CreateDateColumn, 
+    UpdateDateColumn,
+    OneToOne,
+    JoinColumn,
+    ManyToOne
+} from 'typeorm'
+
+import { File } from 'src/files/entities/file.entity'
+import { Author } from 'src/authors/entities/author.entity'
 
 @Entity()
 export class Publication{
@@ -23,6 +35,13 @@ export class Publication{
 
     @Column({default: false})
     archived: boolean
+
+    @OneToOne(() => File, (file) => file.publication,  {nullable: true})
+    @JoinColumn()
+    file: File
+
+    @ManyToOne(() => Author, author => author.publications, {nullable: true})
+    author: Author
 
     @CreateDateColumn({
         type: 'timestamptz',

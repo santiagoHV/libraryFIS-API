@@ -1,7 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, SetMetadata, UseGuards } from '@nestjs/common';
 import { identity } from 'rxjs';
 import { PublicationsService } from '../services/publications.service';
+import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
+import { Public } from 'src/auth/decorators/public.decorator';
 
+
+@UseGuards(ApiKeyGuard)
 @Controller('publications')
 export class PublicationsController {
 
@@ -10,6 +14,7 @@ export class PublicationsController {
     ){}
     
     @Get()
+    @Public()
     getAll(){
         return this.publicationsService.findAll()
     }
