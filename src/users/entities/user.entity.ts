@@ -10,6 +10,12 @@ export class User {
     @Column()
     email: string
 
+    @Column({nullable: true})
+    name: string
+
+    @Column({nullable: true})
+    lastname: string
+
     @Exclude()
     @Column()
     password: string

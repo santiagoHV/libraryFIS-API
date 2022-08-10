@@ -1,11 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, SetMetadata, UseGuards } from '@nestjs/common';
-import { identity } from 'rxjs';
 import { PublicationsService } from '../services/publications.service';
-import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 
 
-@UseGuards(ApiKeyGuard)
+@UseGuards(JwtAuthGuard)
 @Controller('publications')
 export class PublicationsController {
 
@@ -26,7 +25,7 @@ export class PublicationsController {
 
     @Post()
     create(@Body() body: any){
-        return this.create(body)
+        return this.publicationsService.create(body)
     }
 
     @Put(':id')
