@@ -1,23 +1,25 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule } from '@nestjs/config';
 import { PublicationsModule } from './publications/publications.module';
+import { AuthorsModule } from './authors/authors.module';
+import { UsersModule } from './users/users.module';
+import { FilesModule } from './files/files.module';
+import { AuthModule } from './auth/auth.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
-    // TODO: migrate to env
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'santi',
-      password: '1603',
-      database: 'library_database',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: false,
-      retryDelay: 3000,
-      retryAttempts: 10
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
     }),
-    PublicationsModule
+    PublicationsModule,
+    AuthorsModule,
+    UsersModule,
+    FilesModule,
+    AuthModule,
+    DatabaseModule
   ],
   controllers: [],
   providers: [],

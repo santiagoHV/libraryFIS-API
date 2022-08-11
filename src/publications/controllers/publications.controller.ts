@@ -1,7 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { identity } from 'rxjs';
+import { Body, Controller, Delete, Get, Param, Post, Put, SetMetadata, UseGuards } from '@nestjs/common';
 import { PublicationsService } from '../services/publications.service';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
 
+
+@UseGuards(JwtAuthGuard)
 @Controller('publications')
 export class PublicationsController {
 
@@ -10,6 +13,7 @@ export class PublicationsController {
     ){}
     
     @Get()
+    @Public()
     getAll(){
         return this.publicationsService.findAll()
     }
@@ -21,7 +25,7 @@ export class PublicationsController {
 
     @Post()
     create(@Body() body: any){
-        return this.create(body)
+        return this.publicationsService.create(body)
     }
 
     @Put(':id')
