@@ -9,7 +9,7 @@ import config from 'src/config';
         TypeOrmModule.forRootAsync({
             inject: [config.KEY],
             useFactory: (configService: ConfigType<typeof config>) => {
-                const { username, dbName, password, port, host, url } = configService.postgres
+                const { url } = configService.postgres
                 console.log(configService.postgres)
                 return{
                     type: 'postgres',
@@ -21,9 +21,9 @@ import config from 'src/config';
                     // database: dbName,
                     synchronize: false,
                     autoLoadEntities: true,
-                    // ssl: {
-                    //     rejectUnauthorized: false
-                    // }
+                    ssl: {
+                        rejectUnauthorized: false
+                    }
                 }
             }
         })
