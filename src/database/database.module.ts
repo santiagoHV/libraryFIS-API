@@ -7,23 +7,28 @@ import config from 'src/config';
 @Module({
     imports: [
         TypeOrmModule.forRootAsync({
-            inject: [config],
+            inject: [config.KEY],
             useFactory: (configService: ConfigType<typeof config>) => {
-                const { username, name, password, port, host } = configService.postgres
+                const { username, dbName, password, port, host, url } = configService.postgres
+                console.log(configService.postgres)
                 return{
                     type: 'postgres',
-                    host: host,
-                    port: port,
-                    username: username,
-                    password: password,
+                    url: url,
+                    // host: host,
+                    // port: port,
+                    // username: username,
+                    // password: password,
+                    // database: dbName,
                     synchronize: false,
                     autoLoadEntities: true,
+                    // ssl: {
+                    //     rejectUnauthorized: false
+                    // }
                 }
             }
         })
     ],
-    providers:[
-
-    ]
+    providers:[],
+    exports: [TypeOrmModule]
 })
 export class DatabaseModule {}
