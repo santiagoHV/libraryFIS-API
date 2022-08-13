@@ -14,13 +14,11 @@ import config from 'src/config';
                 return{
                     type: 'postgres',
                     url: url,
-                    // host: host,
-                    // port: port,
-                    // username: username,
-                    // password: password,
-                    // database: dbName,
                     synchronize: false,
                     autoLoadEntities: true,
+                    ssl: {
+                        rejectUnauthorized: false,
+                    },
                 }
             }
         })
