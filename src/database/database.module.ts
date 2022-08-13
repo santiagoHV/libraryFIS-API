@@ -21,9 +21,6 @@ import config from 'src/config';
                     // database: dbName,
                     synchronize: false,
                     autoLoadEntities: true,
-                    ssl: {
-                        rejectUnauthorized: false
-                    }
                 }
             }
         })

@@ -5,10 +5,13 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 export class File{
 
     @PrimaryGeneratedColumn()
-    id: Number
+    id: number
 
     @Column()
     documentLink: string
+
+    @Column()
+    documentName: string
 
     @OneToOne(() => Publication, (publication) => publication.file )
     publication: Publication
