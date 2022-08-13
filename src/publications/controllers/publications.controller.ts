@@ -42,12 +42,13 @@ export class PublicationsController {
         file: Express.Multer.File,
         @Body() body: CreatePublicationDto
     ){
+        let newFile
         if(file){
-            const newFile = await this.filesService.create(file)
-            body.fileId = newFile.id;
+            console.log('entra')
+            newFile = await this.filesService.create(file)
         }
         
-        return this.publicationsService.create(body)
+        return this.publicationsService.create(body, file)
     }
 
     @Put(':id')
