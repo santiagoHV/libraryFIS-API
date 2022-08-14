@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Publication } from '../entities/publication.entity';
@@ -64,9 +64,20 @@ export class PublicationsService {
         return this.publicationRepo.save(newPublication)
     }
 
-    async update(id: number, body: any){
+    async update(id: number, body: any, file){
+        console.log(body)
         const publication = await this.publicationRepo.findOne(id)
-        this.publicationRepo.merge(body)
+        if(!publication){
+            throw new HttpException('Not found', HttpStatus.NOT_FOUND)
+        }
+
+        this.publicationRepo.merge(publication, body)
+
+        if(file){
+            const newFile = await this.filesService.create(file)
+            publication.file = newFile
+        }
+
         return this.publicationRepo.save(publication)
     }
 

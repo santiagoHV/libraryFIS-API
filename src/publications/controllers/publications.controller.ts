@@ -99,8 +99,15 @@ export class PublicationsController {
 
     @Put(':id')
     @HttpCode(HttpStatus.CREATED)
-    update(@Param('id') id: number, @Body() body: CreatePublicationDto){
-        return this.publicationsService.update(id, body)
+    @UseInterceptors(FileInterceptor('file'))
+    update(
+        @UploadedFile()
+        file: Express.Multer.File,
+        @Param('id') id: number,
+        @Body() body: CreatePublicationDto
+    ){
+        console.log('se totea en el servicio')
+        return this.publicationsService.update(id, body, file)
     }
 
     @Delete(':id')
