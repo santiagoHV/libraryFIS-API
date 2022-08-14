@@ -54,6 +54,26 @@ export class PublicationsController {
         return res
     }
 
+    @Get('author/:id')
+    @HttpCode(HttpStatus.OK)
+    findByAuthor(@Param('id') id: number){
+        return this.publicationsService.findByAuthor(id)
+    }
+
+
+    @Get('creator/:id')
+    findByCreator(@Param('id') id: number){
+        return this.publicationsService.findByCreator(id)
+    }
+
+    @Get('my-publications/all')
+    @HttpCode(HttpStatus.OK)
+    findMyPublications(@Req() req: Request){
+        const user: any = req.user
+        return this.publicationsService.findByCreator(user.sub)
+    }
+
+
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UseInterceptors(FileInterceptor('file'))

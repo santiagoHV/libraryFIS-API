@@ -27,6 +27,25 @@ export class PublicationsService {
         return this.publicationRepo.findOne(id)
     }
 
+    findByAuthor(id: number){
+        return this.publicationRepo.find({
+            where: {
+                author: {id: id}
+            },
+            relations: ['file','creator']
+        })
+    }
+
+    findByCreator(id: number){
+        return this.publicationRepo.find({
+            where: {
+                creator: {id: id}
+            },
+            relations: ['file','creator']
+        })
+    }
+
+
     async create(body: CreatePublicationDto, file, user){
     
         console.log(user)

@@ -18,10 +18,10 @@ export class Author{
     name: string;
 
     @Column({default: null})
-    email: boolean;
+    email: string;
 
     @Column({default: null})
-    phone: boolean;
+    phone: string;
 
     @Column({default: true})
     alive: boolean;
