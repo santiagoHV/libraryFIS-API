@@ -4,18 +4,21 @@ import { Repository } from 'typeorm'
 import { Publication } from '../entities/publication.entity';
 import { FilesService } from 'src/files/services/files.service';
 import { CreatePublicationDto } from '../dto/create-publication.dto';
+import { UsersService } from 'src/users/services/users.service';
 
 @Injectable()
 export class PublicationsService {
 
     constructor(
         @InjectRepository(Publication) private publicationRepo: Repository<Publication>,
-        private filesService: FilesService
+        private filesService: FilesService,
+        private usersService: UsersService
+
     ){}
 
     findAll(){
         return this.publicationRepo.find({
-            relations: ['file']
+            relations: ['file','creator']
         })
     }
 
@@ -23,10 +26,14 @@ export class PublicationsService {
         return this.publicationRepo.findOne(id)
     }
 
-    async create(body: CreatePublicationDto, file){
+    async create(body: CreatePublicationDto, file, user){
     
+        console.log(user)
         const newPublication = this.publicationRepo.create(body)
-        console.log(typeof(newPublication))
+        const creator = await this.usersService.findByEmail(user.email)
+
+        newPublication.creator = creator
+        
         if(file){
             const newFile = await this.filesService.create(file)
             newPublication.file = newFile

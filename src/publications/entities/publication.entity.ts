@@ -41,7 +41,7 @@ export class Publication{
     @Column({default: false})
     inPhysical: boolean
 
-    @Column()
+    @Column({nullable: true, default: 0})
     stock: number
 
     @OneToOne(() => File, (file) => file.publication,  {nullable: true})

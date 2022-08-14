@@ -1,4 +1,20 @@
-import { Body, Controller, Delete, FileTypeValidator, Get, Param, ParseFilePipe, Post, Put, SetMetadata, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { 
+    Body, 
+    Controller, 
+    Delete, 
+    FileTypeValidator, 
+    Get, 
+    Param, 
+    ParseFilePipe, 
+    Post, 
+    Put, 
+    Req, 
+    SetMetadata, 
+    UploadedFile, 
+    UseGuards, 
+    UseInterceptors 
+} from '@nestjs/common';
+import { Request } from 'express';
 import { PublicationsService } from '../services/publications.service';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
@@ -40,15 +56,10 @@ export class PublicationsController {
             })
         )
         file: Express.Multer.File,
-        @Body() body: CreatePublicationDto
+        @Body() body: CreatePublicationDto,
+        @Req() req: Request
     ){
-        let newFile
-        if(file){
-            console.log('entra')
-            newFile = await this.filesService.create(file)
-        }
-        
-        return this.publicationsService.create(body, file)
+        return this.publicationsService.create(body, file, req.user)
     }
 
     @Put(':id')

@@ -25,5 +25,6 @@ import config from './config';
   ],
   controllers: [],
   providers: [],
+  exports: []
 })
 export class AppModule {}
