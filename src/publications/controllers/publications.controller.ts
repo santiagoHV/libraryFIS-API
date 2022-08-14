@@ -4,6 +4,9 @@ import {
     Delete, 
     FileTypeValidator, 
     Get, 
+    HttpCode, 
+    HttpException, 
+    HttpStatus, 
     Param, 
     ParseFilePipe, 
     Post, 
@@ -33,16 +36,26 @@ export class PublicationsController {
     
     @Get()
     @Public()
+    @HttpCode(HttpStatus.OK)
     getAll(){
         return this.publicationsService.findAll()
     }
 
     @Get(':id')
-    getOne(@Param('id') id: number){
-        return this.publicationsService.findOne(id)
+    @HttpCode(HttpStatus.OK)
+    async getOne(@Param('id') id: number){
+        const res = await this.publicationsService.findOne(id)
+    
+        console.log('res')
+        console.log(res)
+        if(!res){
+            throw new HttpException('Not found', HttpStatus.NOT_FOUND)
+        }
+        return res
     }
 
     @Post()
+    @HttpCode(HttpStatus.CREATED)
     @UseInterceptors(FileInterceptor('file'))
     async create(
         @UploadedFile(
@@ -58,15 +71,20 @@ export class PublicationsController {
         @Body() body: CreatePublicationDto,
         @Req() req: Request
     ){
-        return this.publicationsService.create(body, file, req.user)
+        const res = this.publicationsService.create(body, file, req.user)
+        
+        return res
+
     }
 
     @Put(':id')
+    @HttpCode(HttpStatus.CREATED)
     update(@Param('id') id: number, @Body() body: CreatePublicationDto){
         return this.publicationsService.update(id, body)
     }
 
     @Delete(':id')
+    @HttpCode(HttpStatus.OK)
     delete(@Param('id') id: number){
         return this.publicationsService.delete(id)
     }
