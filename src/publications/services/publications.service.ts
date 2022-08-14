@@ -5,14 +5,15 @@ import { Publication } from '../entities/publication.entity';
 import { FilesService } from 'src/files/services/files.service';
 import { CreatePublicationDto } from '../dto/create-publication.dto';
 import { UsersService } from 'src/users/services/users.service';
-
+import { AuthorsService } from 'src/authors/services/authors.service'; 
 @Injectable()
 export class PublicationsService {
 
     constructor(
         @InjectRepository(Publication) private publicationRepo: Repository<Publication>,
         private filesService: FilesService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private authorsService : AuthorsService
 
     ){}
 
@@ -31,12 +32,15 @@ export class PublicationsService {
         console.log(user)
         const newPublication = this.publicationRepo.create(body)
         const creator = await this.usersService.findByEmail(user.email)
+        const author = await this.authorsService.findOne(body.authorId)
 
+        newPublication.author = author
         newPublication.creator = creator
         
         if(file){
             const newFile = await this.filesService.create(file)
             newPublication.file = newFile
+            
         }
         return this.publicationRepo.save(newPublication)
     }

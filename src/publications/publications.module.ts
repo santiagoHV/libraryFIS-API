@@ -6,12 +6,14 @@ import { PublicationsController } from './controllers/publications.controller';
 import { Publication } from './entities/publication.entity';
 import { FilesModule } from 'src/files/files.module';
 import { UsersModule } from 'src/users/users.module';
+import { AuthorsModule } from 'src/authors/authors.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Publication]),
     FilesModule,
-    UsersModule
+    UsersModule,
+    AuthorsModule
   ],
   providers: [PublicationsService],
   controllers: [PublicationsController],
