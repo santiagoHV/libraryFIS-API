@@ -14,6 +14,7 @@ import { UsersModule } from 'src/users/users.module';
     UsersModule
   ],
   providers: [PublicationsService],
-  controllers: [PublicationsController]
+  controllers: [PublicationsController],
+  exports: [PublicationsService]
 })
 export class PublicationsModule {}
