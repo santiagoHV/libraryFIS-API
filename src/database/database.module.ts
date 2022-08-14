@@ -21,7 +21,10 @@ import config from 'src/config';
                     // database: dbName,
                     synchronize: false,
                     autoLoadEntities: true,
+<<<<<<< HEAD
                     
+=======
+>>>>>>> 855cf516061e1760ccbe28efbb8f5ed977a7ade5
                 }
             }
         })

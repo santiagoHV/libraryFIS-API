@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Publication } from '../entities/publication.entity';
+import { FilesService } from 'src/files/services/files.service';
 
 @Injectable()
 export class PublicationsService {
 
     constructor(
-        @InjectRepository(Publication) private publicationRepo: Repository<Publication>
+        @InjectRepository(Publication) private publicationRepo: Repository<Publication>,
+        private fileService: FilesService
     ){}
 
     findAll(){
