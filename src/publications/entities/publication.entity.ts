@@ -13,12 +13,13 @@ import {
 import { File } from 'src/files/entities/file.entity'
 import { Author } from 'src/authors/entities/author.entity'
 import { User } from 'src/users/entities/user.entity'
+import { Loan } from 'src/loans/entities/loan.entity'
 
 @Entity()
 export class Publication{
 
     @PrimaryGeneratedColumn()
-    id: Number
+    id: number
 
     @Column({length: 100})
     name: string
@@ -47,6 +48,9 @@ export class Publication{
     @OneToOne(() => File, (file) => file.publication,  {nullable: true})
     @JoinColumn()
     file: File
+
+    @OneToMany(() => Loan, loans => loans.publication)
+    loans: Loan[]
 
     @ManyToOne(() => Author, author => author.publications, {nullable: true})
     author: Author

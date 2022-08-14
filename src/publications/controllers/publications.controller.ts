@@ -29,7 +29,6 @@ export class PublicationsController {
 
     constructor(
         private publicationsService: PublicationsService,
-        private filesService: FilesService
     ){}
     
     @Get()

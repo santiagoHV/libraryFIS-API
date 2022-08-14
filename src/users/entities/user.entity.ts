@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from "typeorm";
 import { Exclude } from "class-transformer";
 import { Publication } from "src/publications/entities/publication.entity";
+import { Loan } from "src/loans/entities/loan.entity";
 
 @Entity()
 export class User {
@@ -23,6 +24,9 @@ export class User {
 
     @OneToMany(() => Publication, publication => publication.creator)
     publications: Publication[]
+
+    @OneToMany(() => Loan, loan => loan.user)
+    loans: Loan[]
 
     @CreateDateColumn({
         type: 'timestamptz',

@@ -18,7 +18,7 @@ import config from 'src/config';
                     autoLoadEntities: true,
                     // ssl: {
                     //     rejectUnauthorized: false,
-                    // },
+                    // }
                 }
             }
         })
