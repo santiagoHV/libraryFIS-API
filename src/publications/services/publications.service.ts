@@ -19,7 +19,7 @@ export class PublicationsService {
 
     findAll(){
         return this.publicationRepo.find({
-            relations: ['file','creator']
+            relations: ['file','creator','author']
         })
     }
 
