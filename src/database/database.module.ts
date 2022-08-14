@@ -16,9 +16,9 @@ import config from 'src/config';
                     url: url,
                     synchronize: false,
                     autoLoadEntities: true,
-                    ssl: {
-                        rejectUnauthorized: false,
-                    },
+                    // ssl: {
+                    //     rejectUnauthorized: false,
+                    // }
                 }
             }
         })
