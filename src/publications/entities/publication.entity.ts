@@ -6,11 +6,13 @@ import {
     UpdateDateColumn,
     OneToOne,
     JoinColumn,
-    ManyToOne
+    ManyToOne,
+    OneToMany
 } from 'typeorm'
 
 import { File } from 'src/files/entities/file.entity'
 import { Author } from 'src/authors/entities/author.entity'
+import { User } from 'src/users/entities/user.entity'
 
 @Entity()
 export class Publication{
@@ -36,12 +38,21 @@ export class Publication{
     @Column({default: false})
     archived: boolean
 
+    @Column({default: false})
+    inPhysical: boolean
+
+    @Column()
+    stock: number
+
     @OneToOne(() => File, (file) => file.publication,  {nullable: true})
     @JoinColumn()
     file: File
 
     @ManyToOne(() => Author, author => author.publications, {nullable: true})
     author: Author
+
+    @ManyToOne(() => User, user => user.publications)
+    creator: User
 
     @CreateDateColumn({
         type: 'timestamptz',

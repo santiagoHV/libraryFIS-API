@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, OneToMany } from "typeorm";
 import { Exclude } from "class-transformer";
+import { Publication } from "src/publications/entities/publication.entity";
 
 @Entity()
 export class User {
@@ -19,6 +20,9 @@ export class User {
     @Exclude()
     @Column()
     password: string
+
+    @OneToMany(() => Publication, publication => publication.creator)
+    publications: Publication[]
 
     @CreateDateColumn({
         type: 'timestamptz',
